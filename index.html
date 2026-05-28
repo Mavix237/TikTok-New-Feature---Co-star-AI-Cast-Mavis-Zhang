@@ -83,6 +83,115 @@
       gap: 48px;
     }
 
+    .app.is-problem-mode .app-body {
+      display: none;
+    }
+
+    /* ── Problem stage (replaces phone + panel on step 0) ── */
+    .problem-stage {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .app.is-problem-mode .problem-stage {
+      display: flex;
+    }
+
+    .problem-stage-intro {
+      text-align: center;
+      max-width: 720px;
+      padding: 0 12px;
+    }
+
+    .problem-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--pink);
+      border: 1px solid rgba(254, 44, 85, 0.45);
+      border-radius: 999px;
+      padding: 5px 12px;
+      margin-bottom: 10px;
+    }
+
+    .problem-lead {
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    .problem-stage-layout {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 48px;
+    }
+
+    .problem-stage-slot {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .problem-col-point {
+      margin: 0;
+      font-size: 11px;
+      line-height: 1.45;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.85);
+      max-width: 390px;
+    }
+
+    .problem-stage-slot--panel .problem-col-point {
+      max-width: 390px;
+    }
+
+    .problem-col-point strong {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--teal);
+      margin-bottom: 4px;
+    }
+
+    .problem-device {
+      margin: 0;
+      overflow: hidden;
+      background: #0a0a0a;
+    }
+
+    .problem-device--phone,
+    .problem-device--panel {
+      width: 390px;
+      height: 844px;
+      border-radius: 44px;
+      border: 3px solid #1a1a1a;
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.06),
+        0 40px 80px rgba(0, 0, 0, 0.7);
+    }
+
+    .problem-device img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      border-radius: 40px;
+    }
+
+    .btn-problem-next {
+      width: 280px;
+      padding: 16px;
+      font-size: 15px;
+    }
+
     /* ── Phone shell ── */
     .phone-wrap { flex-shrink: 0; }
 
@@ -358,7 +467,7 @@
       background: rgba(255, 255, 255, 0.06);
     }
 
-    /* ── Screen 0: TikTok existing flow (steps 1–2 reference) ── */
+    /* ── Screen 1: TikTok existing flow (steps 1–2 reference) ── */
     .screen-preface {
       align-items: center;
       text-align: center;
@@ -1731,20 +1840,58 @@
       .app-body { flex-direction: column; gap: 24px; }
       .phone-label { font-size: 12px; padding: 0 8px; }
       .panel { width: 100%; max-width: 390px; max-height: none; }
+      .problem-stage-layout { flex-direction: column; align-items: center; gap: 24px; }
+      .problem-device--phone,
+      .problem-device--panel {
+        width: min(390px, 100vw - 32px);
+        height: auto;
+        aspect-ratio: 390 / 844;
+      }
+      .problem-stage-slot--panel .problem-col-point,
+      .problem-col-point { max-width: 100%; }
     }
   </style>
 </head>
 <body>
-  <div class="app">
+  <div class="app is-problem-mode" id="app">
     <p class="phone-label">TikTok功能优化：AI Cast Co-star —— 帮助轻社交用户在 D1 体验社交感，并自然传播出去</p>
-    <div class="app-body">
+
+    <div class="problem-stage" id="problemStage">
+      <header class="problem-stage-intro">
+        <span class="problem-badge">The Problem</span>
+        <p class="problem-lead">AI Cast 默认你「已经有人可以一起拍」——轻社交用户往往在 D1 就卡住：共创不了，也邀不动。</p>
+      </header>
+      <div class="problem-stage-layout" aria-label="现有体验对比">
+        <div class="problem-stage-slot problem-stage-slot--phone">
+          <p class="problem-col-point">
+            <strong>① 没有共创对象</strong>
+            没有活跃朋友圈，选不到能一起玩的人，感受不到多人故事的乐趣。
+          </p>
+          <figure class="problem-device problem-device--phone">
+            <img src="assets/problem-frame-stage.png" alt="AI Cast Stage：好友尚未激活，无法共创">
+          </figure>
+        </div>
+        <div class="problem-stage-slot problem-stage-slot--panel">
+          <p class="problem-col-point">
+            <strong>② 邀请没有画面感</strong>
+            分享卡只是 AI Self 功能说明，对方看不到成果，也想象不出一起共创的样子。
+          </p>
+          <figure class="problem-device problem-device--panel">
+            <img src="assets/problem-frame-dm.png" alt="DM 分享：仅有 AI Self 功能卡片">
+          </figure>
+        </div>
+      </div>
+      <button class="btn-pill btn-white btn-problem-next" type="button" id="btnProblemNext">继续 →</button>
+    </div>
+
+    <div class="app-body" id="prototypeBody">
     <div class="phone-wrap">
       <div class="phone" id="phone">
         <div class="phone-notch" aria-hidden="true"></div>
         <div class="screen-stage" id="screenStage">
 
-          <!-- 0 · TikTok existing steps 1–2 (reference only) -->
-          <section class="screen screen-preface is-active" data-id="0">
+          <!-- 1 · TikTok existing steps 1–2 (reference only) -->
+          <section class="screen screen-preface" data-id="1">
             <div class="preface-content reveal">
               <span class="preface-badge">TikTok existing flow</span>
               <h2>Steps 1–2 already in the app</h2>
@@ -1758,7 +1905,7 @@
           </section>
 
           <!-- 1 · Fog reveal ★ — wipe inside rectangle -->
-          <section class="screen screen-fog" data-id="1">
+          <section class="screen screen-fog" data-id="2">
             <header class="fog-header">
               <h2>Mavix,<br>Your AI self is ready to meet you!</h2>
             </header>
@@ -1781,7 +1928,7 @@
           </section>
 
           <!-- 2 · AI Self revealed -->
-          <section class="screen screen-revealed bg-glow-purple grain-overlay" data-id="2">
+          <section class="screen screen-revealed bg-glow-purple grain-overlay" data-id="3">
             <header class="revealed-header reveal">
               <h2>This is you</h2>
               <p>Start using your new avatar</p>
@@ -1794,7 +1941,7 @@
           </section>
 
           <!-- 3 · Character pick ★ -->
-          <section class="screen screen-cast bg-glow-purple grain-overlay" data-id="3">
+          <section class="screen screen-cast bg-glow-purple grain-overlay" data-id="4">
             <header class="cast-header reveal">
               <span class="new-badge">NEW</span>
               <h2>Who do you want to hang with?</h2>
@@ -1846,7 +1993,7 @@
           </section>
 
           <!-- 4 · Moment created -->
-          <section class="screen screen-moment bg-glow-wine grain-overlay" data-id="4">
+          <section class="screen screen-moment bg-glow-wine grain-overlay" data-id="5">
             <header class="moment-header reveal">
               <span class="new-badge">NEW</span>
               <h2>AI cast co-star moment created!</h2>
@@ -1880,7 +2027,7 @@
           </section>
 
           <!-- 5 · Invite friends ★ -->
-          <section class="screen screen-invite bg-glow-wine grain-overlay" data-id="5">
+          <section class="screen screen-invite bg-glow-wine grain-overlay" data-id="6">
             <header class="invite-header reveal">
               <span class="new-badge">NEW</span>
               <h2>Invite friends</h2>
@@ -1905,7 +2052,7 @@
           </section>
 
           <!-- 6 · Friend DM -->
-          <section class="screen screen-dm" data-id="6">
+          <section class="screen screen-dm" data-id="7">
             <header class="dm-header">
               <button class="dm-back" type="button" id="btnDmBack" aria-label="Back">‹</button>
               <div class="dm-user">
@@ -1973,6 +2120,11 @@
 
   <script>
     const JOURNEY_STEPS = [
+      {
+        title: '问题所在',
+        description: 'AI Cast 假设用户「已经有人可以共创」——但轻社交用户在 TikTok 上往往没有活跃朋友圈：进 Stage 选不到能拍的人；发邀请时，对方也只能看到 AI Self 功能卡，看不到你们的成果和一起共创的样子。',
+        tags: ['轻社交用户', 'D1 断层', '邀请无画面感']
+      },
       {
         title: '为什么要重新设计？',
         description: '大多数 TikTok 用户其实不怎么在上面社交——他们刷的是内容，关注的是创作者，不是朋友。但 AI Cast 这个功能，默认你有一群朋友在用它，并且能带来',
@@ -2056,12 +2208,21 @@
     let activeAvatarIndex = 0;
     let selectedProfileSrc = AI_SELF_DEFAULT_PROFILE;
 
+    const appEl = document.getElementById('app');
     const screens = [...document.querySelectorAll('.screen')];
     const panelSteps = document.getElementById('panelSteps');
 
+    function phoneScreen(journeyIndex) {
+      return journeyIndex > 0 ? screens[journeyIndex - 1] : null;
+    }
+
+    function setProblemMode(on) {
+      appEl.classList.toggle('is-problem-mode', on);
+    }
+
     function onScreenEnter(index) {
-      if (index === 1) initFog();
-      if (index === 6) applyDmFriendAvatar(pickRandomFriendPhoto());
+      if (index === 2) initFog();
+      if (index === 7) applyDmFriendAvatar(pickRandomFriendPhoto());
     }
 
     function pickRandomFriendPhoto() {
@@ -2079,28 +2240,41 @@
 
     function goToScreen(index, direction = 'forward') {
       if (index < 0 || index >= JOURNEY_STEPS.length || index === currentScreen || isTransitioning) return;
-      if (currentScreen === 4 && index !== 4) pauseMomentVideo();
+      if (currentScreen === 5 && index !== 5) pauseMomentVideo();
       isTransitioning = true;
 
-      const prev = screens[currentScreen];
-      const next = screens[index];
+      const leavingProblem = currentScreen === 0 && index !== 0;
+      const enteringProblem = currentScreen !== 0 && index === 0;
+      const prevPhone = phoneScreen(currentScreen);
+      const nextPhone = phoneScreen(index);
 
-      prev.classList.remove('is-active');
-      prev.classList.add('is-exiting');
-      prev.classList.toggle('is-exit-back', direction === 'back');
+      if (prevPhone && nextPhone && !leavingProblem && !enteringProblem) {
+        prevPhone.classList.remove('is-active');
+        prevPhone.classList.add('is-exiting');
+        prevPhone.classList.toggle('is-exit-back', direction === 'back');
+        nextPhone.classList.remove('is-exiting', 'is-exit-back');
+        nextPhone.classList.add('is-active');
+      }
 
-      next.classList.remove('is-exiting', 'is-exit-back');
-      next.classList.add('is-active');
+      if (leavingProblem && nextPhone) {
+        nextPhone.classList.add('is-active');
+      }
+
+      if (enteringProblem) {
+        screens.forEach(s => s.classList.remove('is-active', 'is-exiting', 'is-exit-back'));
+      }
 
       currentScreen = index;
+      setProblemMode(index === 0);
       updatePanel();
-      if (index === 1) initFog();
+      if (index === 2) initFog();
 
+      const delay = leavingProblem || enteringProblem ? 220 : 450;
       setTimeout(() => {
-        prev.classList.remove('is-exiting', 'is-exit-back');
+        if (prevPhone && !enteringProblem) prevPhone.classList.remove('is-exiting', 'is-exit-back');
         isTransitioning = false;
         onScreenEnter(index);
-      }, 450);
+      }, delay);
     }
 
     function updatePanel() {
@@ -2395,13 +2569,14 @@
     }
 
     /* ── Events ── */
-    document.getElementById('btnStartPrototype').addEventListener('click', () => goToScreen(1));
-    document.getElementById('btnFogContinue').addEventListener('click', () => goToScreen(2));
-    document.getElementById('btnSeePossible').addEventListener('click', () => goToScreen(3));
-    document.getElementById('btnPreview').addEventListener('click', () => goToScreen(4));
-    document.getElementById('btnMomentNext').addEventListener('click', () => goToScreen(5));
-    document.getElementById('btnSendFriends').addEventListener('click', () => goToScreen(6));
-    document.getElementById('btnDmBack').addEventListener('click', () => goToScreen(5, 'back'));
+    document.getElementById('btnProblemNext').addEventListener('click', () => goToScreen(1));
+    document.getElementById('btnStartPrototype').addEventListener('click', () => goToScreen(2));
+    document.getElementById('btnFogContinue').addEventListener('click', () => goToScreen(3));
+    document.getElementById('btnSeePossible').addEventListener('click', () => goToScreen(4));
+    document.getElementById('btnPreview').addEventListener('click', () => goToScreen(5));
+    document.getElementById('btnMomentNext').addEventListener('click', () => goToScreen(6));
+    document.getElementById('btnSendFriends').addEventListener('click', () => goToScreen(7));
+    document.getElementById('btnDmBack').addEventListener('click', () => goToScreen(6, 'back'));
 
     document.querySelectorAll('.character-card:not(.is-disabled)').forEach(card => {
       card.addEventListener('click', () => updateCharacterUI(card.dataset.pos, card.dataset.char));
