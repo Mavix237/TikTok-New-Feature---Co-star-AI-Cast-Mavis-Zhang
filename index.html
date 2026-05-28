@@ -467,103 +467,7 @@
       background: rgba(255, 255, 255, 0.06);
     }
 
-    /* ── Screen 1: TikTok existing flow (steps 1–2 reference) ── */
-    .screen-preface {
-      align-items: center;
-      text-align: center;
-      padding: 0 28px 48px;
-    }
-
-    .preface-content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      max-width: 320px;
-      margin-top: 48px;
-    }
-
-    .preface-badge {
-      display: inline-block;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--teal);
-      border: 1px solid rgba(32, 212, 200, 0.35);
-      border-radius: 999px;
-      padding: 6px 14px;
-      margin-bottom: 22px;
-    }
-
-    .preface-content h2 {
-      font-size: 26px;
-      font-weight: 700;
-      line-height: 1.2;
-      letter-spacing: -0.02em;
-      margin-bottom: 14px;
-    }
-
-    .preface-content > p {
-      font-size: 15px;
-      line-height: 1.5;
-      color: var(--text-secondary);
-      margin-bottom: 22px;
-    }
-
-    .preface-content > p strong { color: var(--white); font-weight: 600; }
-
-    .preface-steps {
-      list-style: none;
-      width: 100%;
-      text-align: left;
-      margin-bottom: 32px;
-      padding: 16px 18px;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .preface-steps li {
-      font-size: 14px;
-      line-height: 1.45;
-      color: rgba(255, 255, 255, 0.75);
-      padding: 8px 0;
-      padding-left: 28px;
-      position: relative;
-    }
-
-    .preface-steps li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      border: 1.5px solid rgba(255, 255, 255, 0.25);
-    }
-
-    .preface-steps li.is-current::before {
-      border-color: var(--teal);
-      background: rgba(32, 212, 200, 0.2);
-      box-shadow: 0 0 0 3px rgba(32, 212, 200, 0.12);
-    }
-
-    .preface-steps li.is-current {
-      color: var(--white);
-      font-weight: 600;
-    }
-
-    .btn-start-proto {
-      width: 100%;
-      padding: 17px 24px;
-      font-size: 16px;
-    }
-
-    /* ── Screen 0 (legacy selfie styles kept for reference) ── */
+    /* ── Screen 1: AI Self loading queue (existing TikTok steps 1–2) ── */
     .screen-selfie {
       align-items: center;
       justify-content: space-between;
@@ -645,9 +549,15 @@
       padding: 0 28px 48px;
     }
 
+    .screen-loading .close-btn {
+      top: 54px;
+    }
+
     .loading-header {
       margin-top: 64px;
       margin-bottom: 36px;
+      z-index: 5;
+      position: relative;
     }
 
     .loading-header h2 {
@@ -661,6 +571,44 @@
       font-size: 15px;
       font-weight: 400;
       color: var(--text-secondary);
+    }
+
+    .loading-start-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--teal);
+      border: 1px solid rgba(32, 212, 200, 0.4);
+      border-radius: 999px;
+      padding: 5px 12px;
+      margin-bottom: 12px;
+    }
+
+    .loading-header .loading-sub {
+      font-size: 13px;
+      line-height: 1.45;
+      color: rgba(255, 255, 255, 0.72);
+      margin-top: 6px;
+      max-width: 300px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .btn-notify:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .btn-notify.is-ready {
+      opacity: 1;
+      animation: notifyPulse 1.2s var(--ease-out) infinite;
+    }
+
+    @keyframes notifyPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+      50% { box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.12); }
     }
 
     .hex-progress-wrap {
@@ -687,8 +635,8 @@
       transform: rotate(-90deg);
     }
 
-  #progressArc {
-      transition: stroke-dashoffset 0.12s linear;
+    #progressArc {
+      transition: stroke-dashoffset 0.08s linear;
     }
 
     .hex-photo {
@@ -701,7 +649,44 @@
     .hex-photo img {
       width: 100%;
       height: 100%;
+      object-fit: cover;
+      object-position: center 35%;
       filter: brightness(0.5);
+    }
+
+    .mock-selfie {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background:
+        radial-gradient(circle at 50% 36%, rgba(255, 255, 255, 0.14) 0%, transparent 42%),
+        linear-gradient(165deg, #4a4a52 0%, #2a2a30 42%, #1a1a1f 100%);
+      filter: brightness(0.55);
+    }
+
+    .mock-selfie::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 30%;
+      transform: translateX(-50%);
+      width: 78px;
+      height: 78px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 0 12px rgba(255, 255, 255, 0.04);
+    }
+
+    .mock-selfie::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: 8%;
+      transform: translateX(-50%);
+      width: 130px;
+      height: 72px;
+      border-radius: 65px 65px 20px 20px;
+      background: rgba(255, 255, 255, 0.08);
     }
 
     .progress-pct {
@@ -719,6 +704,12 @@
 
     .progress-pct.tick {
       transform: scale(1.04);
+    }
+
+    .loading-footer {
+      width: 100%;
+      z-index: 5;
+      position: relative;
     }
 
     .loading-footer p {
@@ -1122,13 +1113,17 @@
       background: rgba(32, 212, 200, 0.06);
     }
 
-    .character-card.is-disabled {
-      opacity: 0.34;
-      pointer-events: none;
-      cursor: default;
-    }
+    .character-card:active { transform: scale(0.98); }
 
-    .character-card:active:not(.is-disabled) { transform: scale(0.98); }
+    .cast-explore-hint {
+      font-size: 11px;
+      line-height: 1.45;
+      color: var(--text-secondary);
+      margin: 10px 24px 4px;
+      max-width: 320px;
+      text-align: center;
+      align-self: center;
+    }
 
     .character-img-wrap {
       position: relative;
@@ -1449,14 +1444,30 @@
       width: 18px;
       height: 18px;
       border-radius: 50%;
-      background: var(--pink);
-      border: 2px solid var(--bg);
-      display: none;
+      background: rgba(0, 0, 0, 0.28);
+      border: 2px solid rgba(255, 255, 255, 0.92);
+      display: flex;
       align-items: center;
       justify-content: center;
+      box-sizing: border-box;
+      transition: background 0.2s var(--ease-out), border-color 0.2s var(--ease-out);
     }
 
-    .friend-chip.is-selected .friend-check { display: flex; }
+    .friend-check svg {
+      opacity: 0;
+      transform: scale(0.7);
+      transition: opacity 0.2s var(--ease-out), transform 0.2s var(--ease-out);
+    }
+
+    .friend-chip.is-selected .friend-check {
+      background: var(--pink);
+      border-color: var(--bg);
+    }
+
+    .friend-chip.is-selected .friend-check svg {
+      opacity: 1;
+      transform: scale(1);
+    }
 
     .friends-empty {
       font-size: 12px;
@@ -1606,35 +1617,40 @@
       animation: revealUp 0.5s var(--ease-out) 0.15s backwards;
     }
 
-    .dm-bubble {
-      background: #f4f4f4;
-      border-radius: 18px;
-      overflow: hidden;
-      max-width: min(292px, 82%);
-      box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+    .screen-dm .cast-card {
+      width: min(268px, calc(100% - 56px));
+      border-radius: 22px;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
+      flex-shrink: 0;
     }
 
-    .dm-bubble.is-sent {
-      border-bottom-right-radius: 6px;
-    }
-
-    .dm-bubble .cast-card-media {
-      aspect-ratio: 1 / 1.02;
-    }
-
-    .dm-bubble .cast-card-media {
-      max-height: 268px;
-    }
-
-    .dm-bubble .cast-card-body {
+    .screen-dm .cast-card-body {
       padding: 12px 14px 14px;
     }
 
-    .dm-bubble .cast-card-caption { font-size: 13px; }
+    .screen-dm .cast-card-avatars {
+      margin-bottom: 8px;
+    }
 
-    .dm-bubble .btn-create-self {
+    .screen-dm .cast-card-avatars img {
+      width: 24px;
+      height: 24px;
+    }
+
+    .screen-dm .cast-card-caption {
       font-size: 13px;
-      padding: 11px 14px;
+      line-height: 1.38;
+    }
+
+    .screen-dm .cast-card .btn-create-self {
+      margin-top: 10px;
+      padding: 11px 12px;
+      font-size: 13px;
+    }
+
+    .screen-dm .play-btn svg {
+      width: 44px;
+      height: 44px;
     }
 
     .dm-footer {
@@ -1643,28 +1659,10 @@
       background: #fff;
     }
 
-    .dm-reactions {
-      display: flex;
-      gap: 8px;
-      padding: 12px 16px 8px;
-    }
-
-    .dm-reaction {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      border: 1px solid #e8e8e8;
-      background: #fff;
-      font-size: 17px;
-      cursor: pointer;
-      transition: transform 0.15s;
-    }
-    .dm-reaction:active { transform: scale(0.92); }
-
     .dm-chips {
       display: flex;
       gap: 8px;
-      padding: 0 16px 10px;
+      padding: 12px 16px 10px;
     }
 
     .dm-chip {
@@ -1813,6 +1811,7 @@
       font-weight: 400;
       line-height: 1.5;
       color: var(--text-secondary);
+      white-space: pre-line;
     }
 
     .panel-step-tags {
@@ -1890,18 +1889,44 @@
         <div class="phone-notch" aria-hidden="true"></div>
         <div class="screen-stage" id="screenStage">
 
-          <!-- 1 · TikTok existing steps 1–2 (reference only) -->
-          <section class="screen screen-preface" data-id="1">
-            <div class="preface-content reveal">
-              <span class="preface-badge">TikTok existing flow</span>
-              <h2>Steps 1–2 already in the app</h2>
-              <p>This prototype starts at <strong>step 2</strong> — when your AI Self is ready — and continues with the redesigned journey.</p>
-              <ol class="preface-steps">
-                <li>Step 1 · Selfie confirmation</li>
-                <li class="is-current">Step 2 · Generation queue — you're up next</li>
-              </ol>
-              <button class="btn-pill btn-white btn-start-proto" type="button" id="btnStartPrototype">Continue to Fog Reveal →</button>
+          <!-- 1 · AI Self loading queue (existing TikTok steps 1–2) -->
+          <section class="screen screen-loading" data-id="1">
+            <button class="close-btn" type="button" aria-label="Close">×</button>
+            <header class="loading-header reveal">
+              <span class="loading-start-badge">Redesign entry point</span>
+              <h2>You're up next</h2>
+              <p>Estimated time: 1 minute</p>
+              <p class="loading-sub">Same moment as TikTok today — selfie captured, AI Self generating. From here, the redesigned AI Cast journey begins.</p>
+            </header>
+            <div class="hex-progress-wrap reveal" aria-label="AI Self generation progress">
+              <div class="hex-ring r1" aria-hidden="true"></div>
+              <div class="hex-ring r2" aria-hidden="true"></div>
+              <div class="hex-ring r3" aria-hidden="true"></div>
+              <svg class="hex-progress-svg" viewBox="0 0 268 308" aria-hidden="true">
+                <path
+                  id="progressArc"
+                  d="M 134 18 L 244 88 L 244 220 L 134 290 L 24 220 L 24 88 Z"
+                  fill="none"
+                  stroke="#20d4c8"
+                  stroke-width="5"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              <div class="hex-photo">
+                <div class="mock-selfie" role="img" aria-label="Generic selfie placeholder"></div>
+              </div>
+              <div class="progress-pct" id="progressPct">0%</div>
             </div>
+            <footer class="loading-footer reveal">
+              <p id="loadingFooterText">Your selfie is in the queue. Watch your AI Self come to life — this is where the new experience starts.</p>
+              <button class="btn-pill btn-white btn-notify" type="button" id="btnStartPrototype" disabled>
+                <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" id="btnStartProtoIcon">
+                  <path d="M12 22a2 2 0 0 0 2-2h-4a2 2 0 0 0 2 2zm6-6V11a6 6 0 1 0-12 0v5l-2 2v1h16v-1l-2-2z" fill="currentColor"/>
+                </svg>
+                <span id="btnStartProtoLabel">Generating…</span>
+              </button>
+              <button class="btn-hide" type="button" id="btnHideNotify">Skip wait · enter redesign</button>
+            </footer>
           </section>
 
           <!-- 1 · Fog reveal ★ — wipe inside rectangle -->
@@ -1952,28 +1977,28 @@
             </header>
             <div class="cast-scroll">
             <div class="character-grid reveal">
-            <button type="button" class="character-card is-selected" data-char="Lyrics" data-pos="lyrics">
+            <button type="button" class="character-card is-selected" data-char="Lyrics" data-pos="lyrics" aria-pressed="true">
               <div class="character-tile">
                 <div class="character-img-wrap"><img class="char-img" src="assets/lyrics.png" alt="Lyrics"></div>
                 <div class="character-name">Lyrics</div>
                 <div class="character-vibe">Sporty</div>
               </div>
             </button>
-            <button type="button" class="character-card is-disabled" data-char="Mich" data-pos="mich" disabled aria-disabled="true" tabindex="-1">
+            <button type="button" class="character-card" data-char="Mich" data-pos="mich" aria-pressed="false">
               <div class="character-tile">
                 <div class="character-img-wrap"><img class="char-img" src="assets/mich.png" alt="Mich"></div>
                 <div class="character-name">Mich</div>
                 <div class="character-vibe">Hype</div>
               </div>
             </button>
-            <button type="button" class="character-card is-disabled" data-char="Timothy" data-pos="timothy" disabled aria-disabled="true" tabindex="-1">
+            <button type="button" class="character-card" data-char="Timothy" data-pos="timothy" aria-pressed="false">
               <div class="character-tile">
                 <div class="character-img-wrap"><img class="char-img" src="assets/timothy.png" alt="Timothy"></div>
                 <div class="character-name">Timothy</div>
                 <div class="character-vibe">Calming</div>
               </div>
             </button>
-            <button type="button" class="character-card is-disabled" data-char="Luna" data-pos="luna" disabled aria-disabled="true" tabindex="-1">
+            <button type="button" class="character-card" data-char="Luna" data-pos="luna" aria-pressed="false">
               <div class="character-tile">
                 <div class="character-img-wrap"><img class="char-img" src="assets/luna.png" alt="Luna"></div>
                 <div class="character-name">Luna</div>
@@ -1981,6 +2006,7 @@
               </div>
             </button>
             </div>
+            <p class="cast-explore-hint reveal">Tap any co-star to preview below. This prototype continues with <strong>Lyrics</strong>.</p>
             </div>
             <button class="btn-pill btn-white btn-preview reveal" type="button" id="btnPreview">
               <span class="preview-avatars">
@@ -2072,29 +2098,35 @@
               </div>
               <p class="dm-time">Today 5:30 PM</p>
               <div class="dm-bubble-wrap">
-                <article class="dm-bubble is-sent">
+                <article class="cast-card cast-card--invite cast-card--dm">
                   <div class="cast-card-media">
-                    <img src="assets/skiing-photo.png" alt="AI Cast moment">
+                    <video
+                      class="cast-card-video"
+                      id="dmVideo"
+                      poster="assets/skiing-photo.png"
+                      src="assets/skiing.mp4"
+                      playsinline
+                      preload="metadata"
+                      loop
+                      muted
+                    ></video>
+                    <button type="button" class="play-btn" id="btnPlayDm" aria-label="Play video">
+                      <svg viewBox="0 0 58 58" aria-hidden="true"><circle cx="29" cy="29" r="29" fill="white" fill-opacity="0.92"/><path d="M23 17l18 12-18 12V17z" fill="#2a2a2a"/></svg>
+                    </button>
                   </div>
                   <div class="cast-card-body">
                     <div class="cast-card-avatars">
-                      <img class="img-user-avatar-sm" src="assets/my-ai-self-profile.png" alt="" width="26" height="26">
+                      <img class="img-user-avatar-sm" src="assets/my-ai-self-profile.png" alt="" width="24" height="24">
                       <span class="plus-mini">+</span>
-                      <img id="dmCharMini" class="char-mini" src="assets/lyrics.png" alt="" width="26" height="26">
+                      <img id="dmCharMini" class="char-mini" src="assets/lyrics.png" alt="" width="24" height="24">
                     </div>
-                    <p class="cast-card-caption"><span class="handle">@Mavix</span> and <span class="handle">@Lyrics</span> skiing on top of the Alps at 5am and nobody stopped them ⛷️❄️</p>
+                    <p class="cast-card-caption"><span class="handle">@Mavix</span> and <span class="handle" id="dmHandle">@Lyrics</span> skiing on top of the Alps at 5am and nobody stopped them ⛷️❄️</p>
                     <button type="button" class="btn-pill btn-pink btn-create-self">Create an AI Self to join Mavix</button>
                   </div>
                 </article>
               </div>
             </div>
             <footer class="dm-footer">
-              <div class="dm-reactions">
-                <button type="button" class="dm-reaction" aria-label="Heart">❤️</button>
-                <button type="button" class="dm-reaction" aria-label="Laugh">😂</button>
-                <button type="button" class="dm-reaction" aria-label="Thumbs up">👍</button>
-                <button type="button" class="dm-reaction" aria-label="Point down">👇</button>
-              </div>
               <div class="dm-chips">
                 <span class="dm-chip">🎭 AI Cast</span>
                 <span class="dm-chip">🔥 Strea…</span>
@@ -2126,39 +2158,34 @@
         tags: ['轻社交用户', 'D1 断层', '邀请无画面感']
       },
       {
-        title: '为什么要重新设计？',
-        description: '大多数 TikTok 用户其实不怎么在上面社交——他们刷的是内容，关注的是创作者，不是朋友。但 AI Cast 这个功能，默认你有一群朋友在用它，并且能带来',
-        tags: ['内容消费型用户', 'D1 激活断层', '社交图谱缺失']
+        title: '体验起点',
+        description: '从 TikTok 原 AI Self 生成体验开始：自拍后，等待生成结果，从这里进入本次 AI Cast redesign 体验。',
+        tags: ['D1 起点', 'AI Self 生成', 'Redesign 入口']
       },
       {
-        title: '身份认同时刻',
-        description: '原体验：等生成，看静态结果。新体验：用手指，把自己的AI Self慢慢揭晓出来，亲手把自己带入这个世界。',
-        tags: ['主动 vs 被动', '情感密度最高点', 'Identity Moment']
+        title: '身份认同时刻 · 初见',
+        description: '原体验：等生成，被动看结果。\n新体验：用手指擦开雾气，亲手揭晓自己的 AI Self。此处的交互增强了用户的主观探索欲和情感密度。',
+        tags: ['主动 vs 被动', '情感密度', 'Identity Moment']
       },
       {
-        title: '初见',
-        description: "'There you are.' —— Avatar 完全显现的瞬间，是整个 AI Self 旅程里情感密度最高的时刻。现有设计完全错过了这个机会。这个 avatar 是我，不是一个模板。",
-        tags: ['Aha Moment', '情感锚点', '留存触发点']
+        title: 'Co-star 共创选择',
+        description: '设定 4 个原生 avatar，可供用户选择加入他们的 AI Cast，链接 AI Self 到 AI Cast 的链路。这样不用依赖现有社交圈和其他好友。注：成片与后续链路固定为 Lyrics，便于走通 prototype。',
+        tags: ['零社交图谱依赖', 'AI Self → AI Cast', 'Prototype · Lyrics']
       },
       {
-        title: '不需要朋友的社交感',
-        description: 'Co-star: 朋友没有AI self时你的TikTok官方玩伴。 D1 就有人陪你，不用等任何人。',
-        tags: ['零社交图谱依赖', '本地化设计', 'D1 激活']
-      },
-      {
-        title: '你的首映场景',
-        description: "用户的 avatar 和 co-star 第一次同框。这个画面天然具备分享价值——不是因为它好看，而是因为它是'我'在里面。情感高潮 = 分享动机最强的时刻。",
-        tags: ['分享触发点', '情感高潮', '内容生产激励']
+        title: '首次体验多人 AI Cast',
+        description: '用户的 avatar 和 co-star 第一次同框。这个画面天然具备分享价值，因为它让用户看到自己和别的朋友可以这样同时表达的机会，使这里成为分享动机最强的时刻。',
+        tags: ['多人 AI Cast', '分享动机峰值', '情感高潮']
       },
       {
         title: '从展示变成邀请',
-        description: "现有分享：静态 sticker + 'Does it look like me?' 新设计：两个 avatar 互动画面 + 'Imagine if this was us 👀'。收到消息的朋友看到的不是一个头像——而是'我们可以一起做这件事'的预览。这是飞轮的启动点。",
-        tags: ['K-factor 提升', '有机增长', '飞轮启动']
+        description: "原体验：静态 sticker + 'Does it look like me?'\n新设计：直观展示多人 AI Cast 结果的可分享卡片。收到消息的朋友看到的将是「Imagine this was us!」的预览，使用户互相之间对此功能的结果更了解，从而对创建 AI Self 与加入 AI Cast 的共创体验更感兴趣。",
+        tags: ['可分享卡片', 'K-factor', '共创预览']
       },
       {
-        title: '增长飞轮闭环',
-        description: '朋友收到邀请 → 创建自己的 AI Self → 原用户现在有了真实的 co-creator → AI Cast 对双方的价值都提升了 → 更多使用 → 更多分享。独自体验播下的种子，长成了真正的社交关系。',
-        tags: ['D30 留存 ↑', 'AI Cast 采用率 ↑', '社交图谱增长']
+        title: '好友分享闭环',
+        description: '朋友收到邀请，创建自己的 AI Self → 原用户现在有了真实的 co-creator → AI Cast 对双方的价值都提升了 → 更多使用，更多分享。独自体验播下的种子，通过 Co-star 的展示，发展成了真正的社交关系。',
+        tags: ['D30 留存 ↑', 'AI Cast 采用率 ↑', '社交关系生长']
       }
     ];
     const CHAR_ASSETS = {
@@ -2203,6 +2230,19 @@
     let isTransitioning = false;
     let fogInitialized = false;
     let fogFullyRevealed = false;
+    let identityPhase = 'fog';
+
+    const PHONE_IDX = {
+      loading: 0,
+      fog: 1,
+      revealed: 2,
+      cast: 3,
+      moment: 4,
+      invite: 5,
+      dm: 6
+    };
+    const CANONICAL_CO_STAR = { pos: 'lyrics', name: 'Lyrics' };
+    let previewPos = 'lyrics';
     let selectedPos = 'lyrics';
     let friendPhotoPool = [];
     let activeAvatarIndex = 0;
@@ -2213,16 +2253,139 @@
     const panelSteps = document.getElementById('panelSteps');
 
     function phoneScreen(journeyIndex) {
-      return journeyIndex > 0 ? screens[journeyIndex - 1] : null;
+      if (journeyIndex <= 0) return null;
+      if (journeyIndex === 1) return screens[PHONE_IDX.loading];
+      if (journeyIndex === 2) {
+        return screens[identityPhase === 'revealed' ? PHONE_IDX.revealed : PHONE_IDX.fog];
+      }
+      if (journeyIndex >= 3) return screens[journeyIndex];
+      return null;
     }
 
     function setProblemMode(on) {
       appEl.classList.toggle('is-problem-mode', on);
     }
 
+    const LOADING_DURATION_MS = 14000;
+    let loadingRaf = null;
+    let loadingDone = false;
+
+    function stopLoadingProgress() {
+      if (loadingRaf) cancelAnimationFrame(loadingRaf);
+      loadingRaf = null;
+    }
+
+    function resetLoadingUI() {
+      loadingDone = false;
+      const arc = document.getElementById('progressArc');
+      const pctEl = document.getElementById('progressPct');
+      const footer = document.getElementById('loadingFooterText');
+      const btn = document.getElementById('btnStartPrototype');
+      const label = document.getElementById('btnStartProtoLabel');
+      const icon = document.getElementById('btnStartProtoIcon');
+      if (pctEl) pctEl.textContent = '0%';
+      if (footer) {
+        footer.textContent = 'Your selfie is in the queue. Watch your AI Self come to life — this is where the new experience starts.';
+      }
+      if (btn) {
+        btn.disabled = true;
+        btn.classList.remove('is-ready');
+      }
+      if (label) label.textContent = 'Generating…';
+      if (icon) icon.style.display = '';
+      if (arc) {
+        const len = arc.getTotalLength();
+        arc.style.strokeDasharray = len;
+        arc.style.strokeDashoffset = len;
+      }
+    }
+
+    function setLoadingComplete() {
+      if (loadingDone) return;
+      loadingDone = true;
+      const footer = document.getElementById('loadingFooterText');
+      const btn = document.getElementById('btnStartPrototype');
+      const label = document.getElementById('btnStartProtoLabel');
+      const icon = document.getElementById('btnStartProtoIcon');
+      const pctEl = document.getElementById('progressPct');
+      if (pctEl) pctEl.textContent = '100%';
+      if (footer) {
+        footer.textContent = 'Your AI Self is ready. Tap below to enter the redesigned journey.';
+      }
+      if (btn) {
+        btn.disabled = false;
+        btn.classList.add('is-ready');
+      }
+      if (label) label.textContent = 'Enter redesign →';
+      if (icon) icon.style.display = 'none';
+    }
+
+    function initLoadingProgress() {
+      stopLoadingProgress();
+      resetLoadingUI();
+      const arc = document.getElementById('progressArc');
+      const pctEl = document.getElementById('progressPct');
+      if (!arc || !pctEl) return;
+
+      const length = arc.getTotalLength();
+      arc.style.strokeDasharray = length;
+      arc.style.strokeDashoffset = length;
+
+      const start = performance.now();
+      let lastPct = -1;
+
+      function tick(now) {
+        if (currentScreen !== 1) return;
+        const t = Math.min(1, (now - start) / LOADING_DURATION_MS);
+        const eased = 1 - Math.pow(1 - t, 2.4);
+        const pct = Math.min(100, Math.floor(eased * 100));
+
+        arc.style.strokeDashoffset = length * (1 - eased);
+        if (pct !== lastPct) {
+          pctEl.textContent = pct + '%';
+          pctEl.classList.add('tick');
+          setTimeout(() => pctEl.classList.remove('tick'), 120);
+          lastPct = pct;
+        }
+
+        if (t < 1) {
+          loadingRaf = requestAnimationFrame(tick);
+        } else {
+          setLoadingComplete();
+        }
+      }
+
+      loadingRaf = requestAnimationFrame(tick);
+    }
+
     function onScreenEnter(index) {
-      if (index === 2) initFog();
-      if (index === 7) applyDmFriendAvatar(pickRandomFriendPhoto());
+      if (index === 1) initLoadingProgress();
+      if (index === 2 && identityPhase === 'fog') initFog();
+      if (index === 2 && identityPhase === 'revealed') setupAvatarPicker();
+      if (index >= 4) applyCanonicalCoStar();
+      if (index === 6) {
+        applyDmFriendAvatar(pickRandomFriendPhoto());
+        startDmVideoAutoplay();
+      }
+    }
+
+    function advanceFogToRevealed() {
+      if (identityPhase === 'revealed' || currentScreen !== 2 || isTransitioning) return;
+      identityPhase = 'revealed';
+      isTransitioning = true;
+
+      const fog = screens[PHONE_IDX.fog];
+      const revealed = screens[PHONE_IDX.revealed];
+      fog.classList.remove('is-active');
+      fog.classList.add('is-exiting');
+      revealed.classList.remove('is-exiting', 'is-exit-back');
+      revealed.classList.add('is-active');
+
+      setTimeout(() => {
+        fog.classList.remove('is-exiting', 'is-exit-back');
+        isTransitioning = false;
+        setupAvatarPicker();
+      }, 450);
     }
 
     function pickRandomFriendPhoto() {
@@ -2240,8 +2403,11 @@
 
     function goToScreen(index, direction = 'forward') {
       if (index < 0 || index >= JOURNEY_STEPS.length || index === currentScreen || isTransitioning) return;
-      if (currentScreen === 5 && index !== 5) pauseMomentVideo();
+      if (currentScreen === 4 && index !== 4) pauseMomentVideo();
+      if (currentScreen === 6 && index !== 6) pauseDmVideo();
       isTransitioning = true;
+
+      if (currentScreen === 1 && index !== 1) stopLoadingProgress();
 
       const leavingProblem = currentScreen === 0 && index !== 0;
       const enteringProblem = currentScreen !== 0 && index === 0;
@@ -2264,10 +2430,15 @@
         screens.forEach(s => s.classList.remove('is-active', 'is-exiting', 'is-exit-back'));
       }
 
+      if (index === 2) {
+        if (currentScreen < 2) identityPhase = 'fog';
+        else if (currentScreen > 2) identityPhase = 'revealed';
+      }
+
       currentScreen = index;
       setProblemMode(index === 0);
       updatePanel();
-      if (index === 2) initFog();
+      if (index === 2 && identityPhase === 'fog') initFog();
 
       const delay = leavingProblem || enteringProblem ? 220 : 450;
       setTimeout(() => {
@@ -2305,15 +2476,26 @@
       });
     }
 
-    function updateCharacterUI(pos, name) {
-      selectedPos = pos;
+    function updateCharacterPreview(pos) {
+      previewPos = pos;
       const src = CHAR_ASSETS[pos];
       document.querySelectorAll('.character-card').forEach(c => {
-        c.classList.toggle('is-selected', c.dataset.pos === pos);
+        const on = c.dataset.pos === pos;
+        c.classList.toggle('is-selected', on);
+        c.setAttribute('aria-pressed', on ? 'true' : 'false');
       });
-      document.getElementById('previewCharImg').src = src;
+      const previewImg = document.getElementById('previewCharImg');
+      if (previewImg && src) previewImg.src = src;
+    }
+
+    function applyCanonicalCoStar() {
+      const { pos, name } = CANONICAL_CO_STAR;
+      selectedPos = pos;
+      const src = CHAR_ASSETS[pos];
       document.getElementById('momentHandle').textContent = '@' + name;
       document.getElementById('inviteHandle').textContent = '@' + name;
+      const dmHandle = document.getElementById('dmHandle');
+      if (dmHandle) dmHandle.textContent = '@' + name;
       const momentMini = document.getElementById('momentCharMini');
       if (momentMini) {
         momentMini.src = src;
@@ -2353,11 +2535,9 @@
       if (fogFullyRevealed) return;
       fogFullyRevealed = true;
       const card = document.getElementById('fogContainer');
-      const btnContinue = document.getElementById('btnFogContinue');
       const hint = document.getElementById('fogHint');
       if (card) card.classList.add('is-fully-revealed');
       if (hint) hint.classList.add('is-hidden');
-      if (btnContinue) btnContinue.classList.add('is-visible');
       if (fogCtx) {
         fogCtx.globalCompositeOperation = 'destination-out';
         fogCtx.fillStyle = 'rgba(0,0,0,1)';
@@ -2365,6 +2545,9 @@
         fogCtx.globalCompositeOperation = 'source-over';
       }
       updateFogProgressUI(FOG_REVEAL_THRESHOLD);
+      setTimeout(() => {
+        if (currentScreen === 2 && identityPhase === 'fog') advanceFogToRevealed();
+      }, 700);
     }
 
     function paintFogLayer() {
@@ -2568,18 +2751,67 @@
       momentVideo.addEventListener('click', () => toggleMomentVideo());
     }
 
+    const dmVideo = document.getElementById('dmVideo');
+    const btnPlayDm = document.getElementById('btnPlayDm');
+
+    function pauseDmVideo() {
+      if (!dmVideo) return;
+      dmVideo.pause();
+      dmVideo.muted = true;
+      if (btnPlayDm) btnPlayDm.classList.remove('is-hidden');
+    }
+
+    async function startDmVideoAutoplay() {
+      if (!dmVideo) return;
+      dmVideo.muted = true;
+      try {
+        await dmVideo.play();
+        if (btnPlayDm) btnPlayDm.classList.add('is-hidden');
+      } catch (_) {
+        if (btnPlayDm) btnPlayDm.classList.remove('is-hidden');
+      }
+    }
+
+    async function toggleDmVideo() {
+      if (!dmVideo) return;
+      if (dmVideo.paused) {
+        dmVideo.muted = true;
+        try {
+          await dmVideo.play();
+          if (btnPlayDm) btnPlayDm.classList.add('is-hidden');
+        } catch (_) { /* autoplay blocked */ }
+      } else {
+        pauseDmVideo();
+      }
+    }
+
+    if (btnPlayDm && dmVideo) {
+      btnPlayDm.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleDmVideo();
+      });
+      dmVideo.addEventListener('click', () => toggleDmVideo());
+    }
+
     /* ── Events ── */
     document.getElementById('btnProblemNext').addEventListener('click', () => goToScreen(1));
-    document.getElementById('btnStartPrototype').addEventListener('click', () => goToScreen(2));
-    document.getElementById('btnFogContinue').addEventListener('click', () => goToScreen(3));
-    document.getElementById('btnSeePossible').addEventListener('click', () => goToScreen(4));
-    document.getElementById('btnPreview').addEventListener('click', () => goToScreen(5));
-    document.getElementById('btnMomentNext').addEventListener('click', () => goToScreen(6));
-    document.getElementById('btnSendFriends').addEventListener('click', () => goToScreen(7));
-    document.getElementById('btnDmBack').addEventListener('click', () => goToScreen(6, 'back'));
+    document.getElementById('btnStartPrototype').addEventListener('click', () => {
+      if (document.getElementById('btnStartPrototype').disabled) return;
+      goToScreen(2);
+    });
+    document.getElementById('btnHideNotify').addEventListener('click', () => goToScreen(2));
+    document.getElementById('btnFogContinue').addEventListener('click', () => advanceFogToRevealed());
+    document.getElementById('btnSeePossible').addEventListener('click', () => goToScreen(3));
+    document.getElementById('btnPreview').addEventListener('click', () => {
+      applyCanonicalCoStar();
+      goToScreen(4);
+    });
+    document.getElementById('btnMomentNext').addEventListener('click', () => goToScreen(5));
+    document.getElementById('btnSendFriends').addEventListener('click', () => goToScreen(6));
+    document.getElementById('btnDmBack').addEventListener('click', () => goToScreen(5, 'back'));
 
-    document.querySelectorAll('.character-card:not(.is-disabled)').forEach(card => {
-      card.addEventListener('click', () => updateCharacterUI(card.dataset.pos, card.dataset.char));
+    document.querySelectorAll('.character-card').forEach(card => {
+      card.addEventListener('click', () => updateCharacterPreview(card.dataset.pos));
     });
 
     function applyProfilePhoto(src) {
