@@ -43,6 +43,7 @@
       --white: #ffffff;
       --text-secondary: rgba(255, 255, 255, 0.6);
       --pink: #fe2c55;
+      --co-star-lyrics-bg: #d4c4f5;
       --panel-bg: #0a0a0a;
       --panel-border: rgba(255, 255, 255, 0.08);
       --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -447,24 +448,13 @@
     }
 
     .img-user-avatar-sm,
-    .cast-card-avatars img,
-    .moment-avatars img,
-    .preview-avatars img,
+    .moment-avatars > img,
+    .cast-card-avatars > img.img-user-avatar-sm,
+    .preview-avatars .preview-avatar--user img,
     .invite-pair img {
       object-fit: cover;
       object-position: center top;
       border-radius: 50%;
-    }
-
-    .preview-avatars img:not(.img-user-avatar-sm),
-    #previewCharImg,
-    #momentCharMini,
-    #inviteCharMini,
-    #dmCharMini {
-      object-fit: contain;
-      object-position: center;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.06);
     }
 
     /* ── Screen 1: AI Self loading queue (existing TikTok steps 1–2) ── */
@@ -1012,6 +1002,16 @@
       border-color: rgba(255, 255, 255, 0.25);
     }
 
+    .revealed-prototype-note {
+      font-size: 11px;
+      line-height: 1.45;
+      color: var(--text-secondary);
+      margin: 2px 28px 0;
+      max-width: 300px;
+      z-index: 5;
+      position: relative;
+    }
+
     .btn-see-possible {
       margin: auto 24px 52px;
       width: calc(100% - 48px);
@@ -1166,20 +1166,86 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 5px;
+      gap: 8px;
       flex-shrink: 0;
     }
 
-    .preview-avatars img,
-    .preview-avatars .preview-char {
-      width: 34px;
-      height: 34px;
+    .preview-avatar {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .preview-avatar--user {
+      background: #2c2c2e;
+    }
+
+    .preview-avatar--char {
+      transition: background-color 0.25s var(--ease-out);
+    }
+
+    .preview-avatar--char[data-pos="lyrics"] { background: var(--co-star-lyrics-bg); }
+    .preview-avatar--char[data-pos="mich"] { background: #d94a2b; }
+    .preview-avatar--char[data-pos="timothy"] { background: #4a7194; }
+    .preview-avatar--char[data-pos="luna"] { background: #6b4f8f; }
+
+    .preview-avatar img {
+      width: 100%;
+      height: 100%;
       border-radius: 50%;
       flex-shrink: 0;
     }
 
+    .preview-avatar--char img,
+    #previewCharImg {
+      object-fit: contain;
+      object-position: center bottom;
+      width: 108%;
+      height: 108%;
+      border-radius: 0;
+      background: none;
+    }
+
+    .preview-avatar--char[data-pos="lyrics"] img,
+    .preview-avatar--char[data-pos="mich"] img,
+    .preview-avatar--char[data-pos="timothy"] img {
+      width: 162%;
+      height: 162%;
+    }
+
+    .preview-avatar--40 {
+      width: 40px;
+      height: 40px;
+    }
+
+    .preview-avatar--28 {
+      width: 28px;
+      height: 28px;
+    }
+
+    .preview-avatar--24 {
+      width: 24px;
+      height: 24px;
+    }
+
+    .moment-avatars .preview-avatar--char {
+      border: 2px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .preview-avatar--user img {
+      object-fit: cover;
+      object-position: center top;
+      transform: scale(1.1);
+      transform-origin: center 30%;
+    }
+
     .preview-avatars .plus {
-      font-size: 15px;
+      font-size: 17px;
       font-weight: 700;
       color: #555;
     }
@@ -1242,17 +1308,12 @@
       margin-bottom: 10px;
     }
 
-    .cast-card-avatars img {
+    .cast-card-avatars > img.img-user-avatar-sm {
       width: 28px;
       height: 28px;
       border-radius: 50%;
       object-fit: cover;
       border: 1.5px solid rgba(0, 0, 0, 0.06);
-    }
-
-    .cast-card-avatars .char-mini {
-      object-fit: contain;
-      background: #f2f2f2;
     }
 
     .cast-card-avatars .plus-mini {
@@ -1314,18 +1375,12 @@
       margin-bottom: 18px;
     }
 
-    .moment-avatars img {
+    .moment-avatars > img {
       width: 40px;
       height: 40px;
       border-radius: 50%;
       object-fit: cover;
       border: 2px solid rgba(255, 255, 255, 0.12);
-    }
-
-    .moment-avatars .co-star-profile {
-      object-fit: cover;
-      object-position: center 12%;
-      background: rgba(255, 255, 255, 0.06);
     }
 
     .moment-avatars .plus-mini { font-size: 14px; opacity: 0.65; }
@@ -1632,7 +1687,7 @@
       margin-bottom: 8px;
     }
 
-    .screen-dm .cast-card-avatars img {
+    .screen-dm .cast-card-avatars > img.img-user-avatar-sm {
       width: 24px;
       height: 24px;
     }
@@ -1962,6 +2017,7 @@
             <div class="avatar-picker reveal" id="avatarPicker">
               <div class="avatar-picker-track" id="avatarPickerTrack" role="listbox" aria-label="Choose your AI Self look"></div>
             </div>
+            <p class="revealed-prototype-note reveal" id="revealedPrototypeNote">Prototype note: browse looks above — the rest of this demo continues with your first look.</p>
             <button class="btn-pill btn-white btn-see-possible reveal" type="button" id="btnSeePossible">See what's possible 👀</button>
           </section>
 
@@ -2010,9 +2066,13 @@
             </div>
             <button class="btn-pill btn-white btn-preview reveal" type="button" id="btnPreview">
               <span class="preview-avatars">
-                <img class="img-user-avatar-sm profile-locked" src="assets/my-ai-self-profile.png" alt="" width="34" height="34">
+                <span class="preview-avatar preview-avatar--user">
+                  <img class="img-user-avatar-sm profile-locked" src="assets/my-ai-self-profile.png" alt="">
+                </span>
                 <span class="plus">+</span>
-                <img id="previewCharImg" src="assets/lyrics.png" alt="" width="34" height="34">
+                <span class="preview-avatar preview-avatar--char" id="previewCharWrap" data-pos="lyrics">
+                  <img id="previewCharImg" src="assets/lyrics.png" alt="">
+                </span>
               </span>
               preview
             </button>
@@ -2026,7 +2086,9 @@
               <div class="moment-avatars">
                 <img src="assets/my-ai-self-profile.png" alt="Mavix AI Self" width="40" height="40">
                 <span class="plus-mini">+</span>
-                <img id="momentCharMini" class="co-star-profile" src="assets/lyrics.png" alt="Lyrics" width="40" height="40">
+                <span class="preview-avatar preview-avatar--char preview-avatar--40" id="momentCharWrap" data-pos="lyrics">
+                  <img id="momentCharMini" src="assets/lyrics.png" alt="Lyrics">
+                </span>
               </div>
             </header>
             <article class="cast-card cast-card--moment reveal">
@@ -2068,7 +2130,9 @@
                 <div class="cast-card-avatars">
                   <img class="img-user-avatar-sm" src="assets/my-ai-self-profile.png" alt="" width="28" height="28">
                   <span class="plus-mini">+</span>
-                  <img id="inviteCharMini" class="char-mini" src="assets/lyrics.png" alt="" width="28" height="28">
+                  <span class="preview-avatar preview-avatar--char preview-avatar--28" id="inviteCharWrap" data-pos="lyrics">
+                    <img id="inviteCharMini" src="assets/lyrics.png" alt="">
+                  </span>
                 </div>
                 <p class="cast-card-caption"><span class="handle">@Mavix</span> and <span class="handle" id="inviteHandle">@Lyrics</span> skiing on top of the Alps at 5am and nobody stopped them ⛷️❄️</p>
                 <button type="button" class="btn-pill btn-pink btn-create-self">Create an AI Self to join Mavix</button>
@@ -2118,7 +2182,9 @@
                     <div class="cast-card-avatars">
                       <img class="img-user-avatar-sm" src="assets/my-ai-self-profile.png" alt="" width="24" height="24">
                       <span class="plus-mini">+</span>
-                      <img id="dmCharMini" class="char-mini" src="assets/lyrics.png" alt="" width="24" height="24">
+                      <span class="preview-avatar preview-avatar--char preview-avatar--24" id="dmCharWrap" data-pos="lyrics">
+                        <img id="dmCharMini" src="assets/lyrics.png" alt="">
+                      </span>
                     </div>
                     <p class="cast-card-caption"><span class="handle">@Mavix</span> and <span class="handle" id="dmHandle">@Lyrics</span> skiing on top of the Alps at 5am and nobody stopped them ⛷️❄️</p>
                     <button type="button" class="btn-pill btn-pink btn-create-self">Create an AI Self to join Mavix</button>
@@ -2486,6 +2552,8 @@
       });
       const previewImg = document.getElementById('previewCharImg');
       if (previewImg && src) previewImg.src = src;
+      const previewWrap = document.getElementById('previewCharWrap');
+      if (previewWrap) previewWrap.dataset.pos = pos;
     }
 
     function applyCanonicalCoStar() {
@@ -2497,14 +2565,17 @@
       const dmHandle = document.getElementById('dmHandle');
       if (dmHandle) dmHandle.textContent = '@' + name;
       const momentMini = document.getElementById('momentCharMini');
-      if (momentMini) {
-        momentMini.src = src;
-        momentMini.classList.add('co-star-profile');
-      }
-      ['inviteCharMini', 'dmCharMini'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.src = src;
-      });
+      const momentWrap = document.getElementById('momentCharWrap');
+      if (momentMini) momentMini.src = src;
+      if (momentWrap) momentWrap.dataset.pos = pos;
+      const inviteMini = document.getElementById('inviteCharMini');
+      const inviteWrap = document.getElementById('inviteCharWrap');
+      if (inviteMini) inviteMini.src = src;
+      if (inviteWrap) inviteWrap.dataset.pos = pos;
+      const dmMini = document.getElementById('dmCharMini');
+      const dmWrap = document.getElementById('dmCharWrap');
+      if (dmMini) dmMini.src = src;
+      if (dmWrap) dmWrap.dataset.pos = pos;
     }
 
     /* ── Fog canvas (fixed 350×480 card) ── */
@@ -2830,14 +2901,8 @@
         t.setAttribute('aria-selected', i === index ? 'true' : 'false');
       });
       const hero = document.getElementById('avatarHero');
-      if (hero) {
-        hero.style.opacity = '0';
-        setTimeout(() => {
-          hero.src = assetUrl(variant.hero);
-          hero.style.opacity = '1';
-        }, 150);
-      }
-      applyProfilePhoto(variant.profile);
+      if (hero) hero.src = assetUrl(variant.hero);
+      /* Prototype: hero follows selection; profile + later screens stay on first look */
     }
 
     function setupAvatarPicker() {
