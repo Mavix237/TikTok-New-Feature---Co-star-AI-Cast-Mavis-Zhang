@@ -69,10 +69,18 @@
     .app {
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      padding: 32px 40px;
+    }
+
+    .app-body {
+      display: flex;
       align-items: center;
       justify-content: center;
       gap: 48px;
-      padding: 32px 40px;
     }
 
     /* ── Phone shell ── */
@@ -80,12 +88,13 @@
 
     .phone-label {
       text-align: center;
-      font-size: 11px;
+      max-width: 920px;
+      font-size: 13px;
       font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--text-secondary);
-      margin-bottom: 16px;
+      line-height: 1.55;
+      letter-spacing: 0.01em;
+      color: rgba(255, 255, 255, 0.62);
+      margin: 0;
     }
 
     .phone {
@@ -1685,28 +1694,51 @@
     }
 
     .panel-step-item.is-open .panel-step-body {
-      max-height: 120px;
+      max-height: 520px;
       opacity: 1;
     }
 
     .panel-step-body p {
-      margin: 0 14px 14px 52px;
+      margin: 0 14px 12px 52px;
       font-size: 13px;
       font-weight: 400;
       line-height: 1.5;
       color: var(--text-secondary);
     }
 
+    .panel-step-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 0 14px 14px 52px;
+    }
+
+    .panel-step-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      line-height: 1.25;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: rgba(32, 212, 200, 0.1);
+      color: var(--teal);
+      border: 1px solid rgba(32, 212, 200, 0.28);
+    }
+
     @media (max-width: 960px) {
-      .app { flex-direction: column; padding: 24px 16px; }
+      .app { padding: 24px 16px; gap: 16px; }
+      .app-body { flex-direction: column; gap: 24px; }
+      .phone-label { font-size: 12px; padding: 0 8px; }
       .panel { width: 100%; max-width: 390px; max-height: none; }
     }
   </style>
 </head>
 <body>
   <div class="app">
+    <p class="phone-label">TikTok功能优化：AI Cast Co-star —— 帮助轻社交用户在 D1 体验社交感，并自然传播出去</p>
+    <div class="app-body">
     <div class="phone-wrap">
-      <p class="phone-label">Interactive prototype · 390 × 844</p>
       <div class="phone" id="phone">
         <div class="phone-notch" aria-hidden="true"></div>
         <div class="screen-stage" id="screenStage">
@@ -1936,17 +1968,46 @@
       <h2 class="panel-heading">Prototype steps</h2>
       <ol class="panel-steps" id="panelSteps" aria-label="Journey steps"></ol>
     </aside>
+    </div>
   </div>
 
   <script>
     const JOURNEY_STEPS = [
-      { title: 'Intro', description: 'Steps 1–2 already exist in TikTok: selfie and AI Self loading.' },
-      { title: 'Fog reveal', description: 'Swipe to wipe the fog and meet your AI Self.' },
-      { title: 'This is you', description: 'Pick your main look and profile photo.' },
-      { title: 'Pick co-star', description: 'Choose Lyrics as your AI Cast co-star.' },
-      { title: 'Moment', description: 'Preview the skiing moment you created together.' },
-      { title: 'Invite friends', description: 'Select friends and send the invite card.' },
-      { title: 'DM', description: 'See the invite message sent to your friend.' }
+      {
+        title: '为什么要重新设计？',
+        description: '大多数 TikTok 用户其实不怎么在上面社交——他们刷的是内容，关注的是创作者，不是朋友。但 AI Cast 这个功能，默认你有一群朋友在用它，并且能带来',
+        tags: ['内容消费型用户', 'D1 激活断层', '社交图谱缺失']
+      },
+      {
+        title: '身份认同时刻',
+        description: '原体验：等生成，看静态结果。新体验：用手指，把自己的AI Self慢慢揭晓出来，亲手把自己带入这个世界。',
+        tags: ['主动 vs 被动', '情感密度最高点', 'Identity Moment']
+      },
+      {
+        title: '初见',
+        description: "'There you are.' —— Avatar 完全显现的瞬间，是整个 AI Self 旅程里情感密度最高的时刻。现有设计完全错过了这个机会。这个 avatar 是我，不是一个模板。",
+        tags: ['Aha Moment', '情感锚点', '留存触发点']
+      },
+      {
+        title: '不需要朋友的社交感',
+        description: 'Co-star: 朋友没有AI self时你的TikTok官方玩伴。 D1 就有人陪你，不用等任何人。',
+        tags: ['零社交图谱依赖', '本地化设计', 'D1 激活']
+      },
+      {
+        title: '你的首映场景',
+        description: "用户的 avatar 和 co-star 第一次同框。这个画面天然具备分享价值——不是因为它好看，而是因为它是'我'在里面。情感高潮 = 分享动机最强的时刻。",
+        tags: ['分享触发点', '情感高潮', '内容生产激励']
+      },
+      {
+        title: '从展示变成邀请',
+        description: "现有分享：静态 sticker + 'Does it look like me?' 新设计：两个 avatar 互动画面 + 'Imagine if this was us 👀'。收到消息的朋友看到的不是一个头像——而是'我们可以一起做这件事'的预览。这是飞轮的启动点。",
+        tags: ['K-factor 提升', '有机增长', '飞轮启动']
+      },
+      {
+        title: '增长飞轮闭环',
+        description: '朋友收到邀请 → 创建自己的 AI Self → 原用户现在有了真实的 co-creator → AI Cast 对双方的价值都提升了 → 更多使用 → 更多分享。独自体验播下的种子，长成了真正的社交关系。',
+        tags: ['D30 留存 ↑', 'AI Cast 采用率 ↑', '社交图谱增长']
+      }
     ];
     const CHAR_ASSETS = {
       lyrics: 'assets/lyrics.png',
@@ -2059,7 +2120,10 @@
 
         const body = document.createElement('div');
         body.className = 'panel-step-body';
-        body.innerHTML = `<p>${step.description}</p>`;
+        const tagsHtml = step.tags && step.tags.length
+          ? `<div class="panel-step-tags">${step.tags.map(t => `<span class="panel-step-tag">${t}</span>`).join('')}</div>`
+          : '';
+        body.innerHTML = `<p>${step.description}</p>${tagsHtml}`;
 
         li.appendChild(head);
         li.appendChild(body);
